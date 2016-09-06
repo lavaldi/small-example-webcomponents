@@ -1,0 +1,30 @@
+<template id="pony-tpl">
+  <style>
+
+h1 { color: orange; }
+  </style>
+  <h1>General Soda</h1>
+</template>
+<script type="text/javascript">
+  <!--
+  Document ready with pure JS (http://www.jstips.co/en/detect-document-ready-in-pure-js/)
+  document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+      // document ready
+    }
+  };
+  -->
+  document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+      var PonyComponentProto = Object.create(HTMLElement.prototype);
+      // add some template using the template tag
+      PonyComponentProto.createdCallback = function() {
+        var template = document.querySelector('#pony-tpl');
+        var clone = document.importNode(template.content, true);
+        this.createShadowRoot().appendChild(clone);
+      };
+      var PonyComponent = document.registerElement('ns-pony', {prototype: PonyComponentProto});
+      document.body.appendChild(new PonyComponent());
+    }
+  };
+</script>
